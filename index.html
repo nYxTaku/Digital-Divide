@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles2.css"/>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.1.1/model-viewer.min.js"></script>
+    <script src="script.js" defer></script>
+    <title>Digital Divide in India</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <h1>Digital Divide and India</h1>
+            <p>Examining the emergence of digital society and the digital divide in India through Globalisation</p>
+        </nav>
+    </header>
+
+    <main>
+        <section class="brief">
+            <div class="brief_text">
+                <h2>What is Globalization?</h2>
+                <p>Globalization is a complicated phenomenon that aims to increase global interdependence 
+                    and integration by establishing networks and activities that cross economic, social, 
+                    and geographical boundaries, resulting in a world without borders.<br><br></p>
+                <p>Globalization in India has had quite a few merits, but there had also be an equal number 
+                    of demerits. One of them being the Digital Divide in India.</p>
+            </div>
+            <div class="brief_img">
+                <img src="POU.png" alt="Globalization Image">
+            </div>
+        </section>
+        <section class="new-section">
+            <h2>Digital Divide in India</h2>
+            <p>As the Internet continues to make inroads across the world, it is also creating a 
+                separation between those who have access to this global network and those who do not. 
+                This separation is called the "digital divide" and is of great concern.</p>
+            <p>The Digital Divide in India refers to the unequal access to and the use of digital 
+                technologies and the internet among different segments of the population.</p>
+            <!-- Add more content as needed -->
+        </section>
+        <section class="section">
+            <h2>No Mobile Phones</h2>
+            <p>The charts below compare multiple variables to show the extent of digital divide in India post Globalisation.</p>
+            <!-- Slider main container -->
+            <div class="swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <div id="mob_edu"></div>
+                        <script>
+                            // Function to fetch and create the multiline chart for Education
+                            function EduChart() {
+                                fetch('mob_edu.csv')
+                                    .then(response => response.text())
+                                    .then(csvData => {
+                                        const rows = csvData.split('\n');
+                                        const dates = [];
+                                        const values = [];
+                                        const categories = rows[0].split(',');
+
+                                        // Create constant z values (in this case, all set to 0)
+                                        const zValues = new Array(categories.length - 1).fill(0);
+
+                                        for (let i = 1; i < categories.length; i++) {
+                                            values.push({
+                                                x: dates,
+                                                y: [],
+                                                z: zValues,
+                                                mode: 'lines+markers',
+                                                type: 'scatter3d',
+                                                name: categories[i]
+                                            });
+                                        }
+
+                                        for (let i = 1; i < rows.length; i++) {
+                                            const columns = rows[i].split(',');
+                                            if (columns.length < 2) {
+                                                continue;
+                                            }
+                                            dates.push(columns[0]);
+                                            for (let j = 1; j < categories.length; j++) {
+                                                values[j - 1].y.push(Number(columns[j]));
+                                            }
+                                        }
+
+                                        const layout = {
+                                            title: 'Percentage of Respondants with no mobile phone by Education',
+                                            scene: {
+                                                xaxis: { title: 'Dates' },
+                                                yaxis: { title: 'Percentage' },
+                                                zaxis: { title: '', showticklabels: false }
+                                            },
+                                            paper_bgcolor: '#191919',
+                                            plot_bgcolor: '#191919',
+                                            font: { color: '#daa747' },
+                                            width: 1000, // Set the width of the plot
+                                            height: 600 // Set the height of the plot
+                                        };
+
+                                        Plotly.newPlot('mob_edu', values, layout);
+                                    })
+                                    .catch(error => console.error('Error:', error));
+                            }
+                            EduChart();
+                        </script>
+                    </div>
+                    <div class="swiper-slide">
+                        <div id="mob_gen"></div>
+                        <script>
+                            // Function to fetch and create the clustered column chart for Gender
+                            function GenChart() {
+                                fetch('mob_gen.csv') 
+                                    .then(response => response.text())
+                                    .then(data => {
+                                        const rows = data.split('\n');
+                                        const categories = rows[0].split(',');
+                                        const traces = [];
+
+                                        for (let i = 1; i < categories.length; i++) {
+                                            const xValues = [];
+                                            const yValues = [];
+                                            for (let j = 1; j < rows.length; j++) {
+                                                const columns = rows[j].split(',');
+                                                xValues.push(columns[0]); // Assumes the first column is the x-axis values
+                                                yValues.push(Number(columns[i]));
+                                            }
+
+                                            traces.push({
+                                                x: xValues,
+                                                y: yValues,
+                                                name: categories[i],
+                                                type: 'bar'
+                                            });
+                                        }
+
+                                        const layout = {
+                                            title: 'Percentage of Respondents with no mobile phone by Gender',
+                                            xaxis: { title: 'Dates' },
+                                            yaxis: { title: 'Percentage' },
+                                            paper_bgcolor: '#191919',
+                                            plot_bgcolor: '#191919',
+                                            font: { color: '#daa747' },
+                                            width: 1000, // Set the width of the plot
+                                            height: 600, // Set the height of the plot
+                                            barmode: 'group'
+                                        };
+
+                                        Plotly.newPlot('mob_gen', traces, layout);
+                                    })
+                                    .catch(error => console.error('Error:', error));
+                            }
+                            GenChart();
+                        </script>
+                    </div>
+                    <div class="swiper-slide">
+                        <div id="mob_rel"></div>
+                        <script>
+                            // Function to fetch and create the scatter chart for Religion
+                            function RelChart() {
+                                var csvFile = 'mob_rel.csv';
+                                Papa.parse(csvFile, {
+                                    header: true,
+                                    download: true,
+                                    dynamicTyping: true,
+                                    complete: function (results) {
+                                        var data = [];
+
+                                        var years = results.data.map(function (row) {
+                                            return row['RELIGION'];
+                                        });
+
+                                        var religions = results.meta.fields.slice(1);
+
+                                        religions.forEach(function (religion, index) {
+                                            var trace = {
+                                                x: years,
+                                                y: results.data.map(function (row) {
+                                                    return row[religion];
+                                                }),
+                                                z: Array(years.length).fill(index), // Add a depth dimension
+                                                name: religion,
+                                                mode: 'markers',
+                                                type: 'scatter3d',
+                                                marker: {
+                                                    size: 10,
+                                                    symbol: 'circle', // You can change the marker symbol
+                                                    opacity: 0.8, // Adjust the opacity
+                                                },
+                                            };
+                                            data.push(trace);
+                                        });
+
+                                        var layout = {
+                                            title: 'Percentage of Respondents with no mobile phone by Religion',
+                                            scene: {
+                                                xaxis: { title: 'Dates' },
+                                                yaxis: { title: 'Percentage' },
+                                                zaxis: { title: 'Religion', showticklabels: false },
+                                            },
+                                            paper_bgcolor: '#191919',
+                                            plot_bgcolor: '#191919',
+                                            font: { color: '#daa747' },
+                                            width: 1000, // Set the width of the plot
+                                            height: 600 // Set the height of the plot
+                                        };
+
+                                        Plotly.newPlot('mob_rel', data, layout);
+                                    }
+                                });
+                            }
+                            RelChart();
+                        </script>
+                    </div>
+                </div>
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </section>
+        <section class="section-2">
+            <h2>No Access to Computers</h2>
+            <p>The charts below compare multiple variables to show the extent of digital divide in India post Globalisation.</p>
+            <!-- Slider main container -->
+            <div class="swiper">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide">
+                        <div id="lap_reg"></div>
+                        <div class="heatmap-container">
+                            <div id="ruralHeatmap"></div>
+                            <div id="urbanHeatmap"></div>
+                        </div>
+                        <script>
+                            function LapRegChart() {
+                                var ruralData = [
+                                    [97.9, 97.7, 97.66, 97.58, 97.46, 97.09, 98.21, 98.83, 98.66, 98.54, 98.66, 99.05]
+                                ];
+
+                                var urbanData = [
+                                    [84.73, 83.56, 82.4, 81.68, 81.38, 80.6, 86.5, 90.22, 89.89, 87.41, 90.76, 91.56]
+                                ];
+
+                                var periods = [
+                                    'Jan-Apr 2021',
+                                    'May-Aug 2021',
+                                    'Sep-Dec 2021',
+                                    'Jan-Apr 2020',
+                                    'May-Aug 2020',
+                                    'Sep-Dec 2020',
+                                    'Jan-Apr 2019',
+                                    'May-Aug 2019',
+                                    'Sep-Dec 2019',
+                                    'Jan-Apr 2018',
+                                    'May-Aug 2018',
+                                    'Sep-Dec 2018'
+                                ];
+
+                                // Create a heatmap for Rural data
+                                var ruralHeatmapData = [
+                                    {
+                                        z: ruralData,
+                                        x: periods,
+                                        y: ['Rural'],
+                                        type: 'heatmap',
+                                        colorscale: 'Viridis',
+                                    }
+                                ];
+
+                                var ruralLayout = {
+                                    title: 'Percentage of People with no access<br>to a computer by region (Rural)',
+                                    xaxis: { title: 'Period' },
+                                    yaxis: { title: 'Area' },
+                                    paper_bgcolor: '#191919',
+                                    plot_bgcolor: '#191919',
+                                    font: { color: '#daa747' },
+                                    width: 500, // Set the width of the plot
+                                    height: 500 // Set the height of the plot
+                                };
+
+                                // Create a heatmap for Urban data
+                                var urbanHeatmapData = [
+                                    {
+                                        z: urbanData,
+                                        x: periods,
+                                        y: ['Urban'],
+                                        type: 'heatmap',
+                                        colorscale: 'YlGnBu',
+                                    }
+                                ];
+
+                                var urbanLayout = {
+                                    title: 'Percentage of People with no access<br>to a computer by region (Urban)',
+                                    xaxis: { title: 'Period' },
+                                    yaxis: { title: 'Area' },
+                                    paper_bgcolor: '#191919',
+                                    plot_bgcolor: '#191919',
+                                    font: { color: '#daa747' },
+                                    width: 500, // Set the width of the plot
+                                    height: 500 // Set the height of the plot
+                                };
+
+                                Plotly.newPlot('ruralHeatmap', ruralHeatmapData, ruralLayout);
+                                Plotly.newPlot('urbanHeatmap', urbanHeatmapData, urbanLayout);
+                            }
+                            LapRegChart();
+                        </script>
+                    </div>
+                    <div class="swiper-slide">
+                        <div id="lap_emp"></div>
+                        <script>
+                            function LapEmpChart() {
+                                Plotly.d3.csv("lap_emp.csv", function(data) {
+                                    var dates = data.map(row => row['EMPLOYMENT STATUS']);
+                                    var dailyWageWorker = data.map(row => row['DAILY WAGE WORKER/CASUAL LABOUR']);
+                                    var salariedPermanent = data.map(row => row['SALARIED - PERMANENT']);
+                                    var salariedTemporary = data.map(row => row['SALARIED - TEMPORARY']);
+                                    var selfEmployed = data.map(row => row['SELF-EMPLOYED']);
+                                    var unemployedNotWilling = data.map(row => row['UNEMPLOYED (NOT WILLING & NOT LOOKING FOR A JOB)']);
+                                    var unemployedWillingLooking = data.map(row => row['UNEMPLOYED (WILLING & LOOKING FOR A JOB)']);
+                                    var unemployedWillingNotLooking = data.map(row => row['UNEMPLOYED (WILLING BUT NOT LOOKING FOR A JOB)']);
+
+                                    var trace1 = {
+                                        x: dates,
+                                        y: dailyWageWorker,
+                                        z: dailyWageWorker, // Use a third dimension (z) for the 3D scatter plot
+                                        name: 'DAILY WAGE WORKER/CASUAL LABOUR',
+                                        mode: 'markers',
+                                        type: 'scatter3d'
+                                    };
+
+                                    var trace2 = {
+                                        x: dates,
+                                        y: salariedPermanent,
+                                        z: salariedPermanent, // Use a third dimension (z) for the 3D scatter plot
+                                        name: 'SALARIED - PERMANENT',
+                                        mode: 'markers',
+                                        type: 'scatter3d'
+                                    };
+
+                                    var trace3 = {
+                                        x: dates,
+                                        y: salariedTemporary,
+                                        z: salariedTemporary, // Use a third dimension (z) for the 3D scatter plot
+                                        name: 'SALARIED - TEMPORARY',
+                                        mode: 'markers',
+                                        type: 'scatter3d'
+                                    };
+                                
+                                    var trace4 = {
+                                        x: dates,
+                                        y: selfEmployed,
+                                        z: selfEmployed, // Use a third dimension (z) for the 3D scatter plot
+                                        name: 'SELF-EMPLOYED',
+                                        mode: 'markers',
+                                        type: 'scatter3d'
+                                    };
+                                
+                                    var trace5 = {
+                                        x: dates,
+                                        y: unemployedNotWilling,
+                                        z: unemployedNotWilling, // Use a third dimension (z) for the 3D scatter plot
+                                        name: 'UNEMPLOYED (NOT WILLING & NOT LOOKING FOR A JOB)',
+                                        mode: 'markers',
+                                        type: 'scatter3d'
+                                    };
+                                
+                                    var trace6 = {
+                                        x: dates,
+                                        y: unemployedWillingLooking,
+                                        z: unemployedWillingLooking, // Use a third dimension (z) for the 3D scatter plot
+                                        name: 'UNEMPLOYED (WILLING & LOOKING FOR A JOB)',
+                                        mode: 'markers',
+                                        type: 'scatter3d'
+                                    };
+                                
+                                    var trace7 = {
+                                        x: dates,
+                                        y: unemployedWillingNotLooking,
+                                        z: unemployedWillingNotLooking, // Use a third dimension (z) for the 3D scatter plot
+                                        name: 'UNEMPLOYED (WILLING BUT NOT LOOKING FOR A JOB)',
+                                        mode: 'markers',
+                                        type: 'scatter3d'
+                                    };
+                                
+                                    var data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7];
+                                
+                                    var layout = {
+                                        title: 'Percentage Respondents with no access to a computer by Employment',
+                                        scene: { // Configure 3D scene settings
+                                            xaxis: { title: 'Time Period' },
+                                            yaxis: { title: 'Percentage' },
+                                            zaxis: { title: 'Percentage' },
+                                        },
+                                        paper_bgcolor: '#191919',
+                                        plot_bgcolor: '#191919',
+                                        font: { color: '#daa747' },
+                                        width: 1000, // Set the width of the plot
+                                        height: 600 // Set the height of the plot
+                                    };
+
+                                    Plotly.newPlot('lap_emp', data, layout);
+                                });
+                            }
+                            LapEmpChart();
+                        </script>
+                    </div>
+                    <div class="swiper-slide">
+                        <div id="lap_cas"></div>
+                        <script>
+                            function LapCasChart() {
+                                Plotly.d3.csv("lap_cas.csv", function(data) {
+                                    var categories = Object.keys(data[0]).filter(key => key !== 'CASTE');
+                                    var traces = [];
+
+                                    categories.forEach(category => {
+                                        var trace = {
+                                            x: data.map(row => row['CASTE']),
+                                            y: data.map(row => row[category]),
+                                            name: category,
+                                            type: 'bar',
+                                        };
+                                        traces.push(trace);
+                                    });
+
+                                    var layout = {
+                                        title: 'Percentage of Respondants who have no access to a computer based on Caste',
+                                        xaxis: { title: 'Caste' },
+                                        yaxis: { title: 'Percentage' },
+                                        barmode: 'group',
+                                        paper_bgcolor: '#191919',
+                                        plot_bgcolor: '#191919',
+                                        font: { color: '#daa747' },
+                                        width: 1000, // Set the width of the plot
+                                        height: 600 // Set the height of the plot
+                                    };
+
+                                    Plotly.newPlot('lap_cas', traces, layout);
+                                });
+                            }
+                            LapCasChart();
+                        </script>
+                    </div>
+                </div>
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </section>
+        <section class="section-3">
+            <h2>Conclusion</h2>
+            <p>By thoroughly examining the trends, patterns, and variations in these charts, you 
+                can gain insights into the digital divide in India caused by globalization.<br>
+                We can clearly notice disparities in technology access based on education, 
+                gender, religion, region, employment, and caste. There is discernible digital gaps 
+                in each chart, showing the extent of digital divide in the nation.<br><br>Globalization 
+                has resulted in a complex digital gap in India that is pronounced in terms of 
+                caste, employment, education, gender, and religion. These disparities highlight 
+                how important it is to make thoughtful interventions. Focused efforts are necessary 
+                to address these disparities and promote equitable access to technology. In order 
+                to create complete policies that guarantee fair participation in the digital era 
+                and promote a more inclusive and connected society, it is imperative to recognize 
+                the subtle problems in each dimension.<br><br>In summary, the digital revolution 
+                brought about by globalization in India has resulted in a complex web of 
+                opportunities and difficulties that are represented by the digital divide. 
+                Addressing the gaps in education, gender, religion, geography, employment, and 
+                caste is crucial as technology becomes a more fundamental part of society. 
+                Harnessing the benefits of digitalization and making sure that no section of 
+                the population is left behind in the move toward an India empowered by technology 
+                requires a coordinated, inclusive strategy.</p>
+            <!-- Add more content as needed -->
+        </section>
+        <button onclick="scrollToTop()" id="backToTopBtn" title="Go to top">
+            <img src="angle-up-solid.svg" alt="Back to Top">
+        </button>        
+    </main>
+    <footer>
+        <p>© 2023 nYx. All rights reserved.</p>
+    </footer>
+</body>
+</html>

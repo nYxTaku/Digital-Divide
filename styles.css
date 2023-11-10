@@ -1,0 +1,244 @@
+/* Reset some default styles */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #daa747;
+  color: #daa747;
+  overflow-x: hidden;
+}
+
+header {
+  background-color: #daa747;
+  padding: 20px;
+  text-align: center;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 80px;
+}
+
+header:hover {
+  opacity: 0.8;
+}
+
+nav h1 {
+  margin-bottom: 10px;
+  font-size: 32px;
+  color: #191919;
+}
+
+nav p {
+  margin-top: 20px;
+  font-size: 20px;
+  color: #191919;
+}
+
+main {
+  padding: 20px;
+}
+
+.brief {
+  background-color: #191919;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin-bottom: 20px; /* Adjust margin as needed */
+  text-align: left;
+  color: #daa747;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brief h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.brief p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-left: 10px;
+}
+
+.brief img {
+  max-width: 95%;
+  margin-left: 20px;
+  margin-right: 20px; /* Adjust margin as needed */
+}
+
+.new-section {
+  background-color: #191919;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin-bottom: 20px; /* Adjust margin as needed */
+  text-align: left;
+  color: #daa747;
+}
+
+.new-section h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.new-section p {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.section {
+  background-color: #191919;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin-bottom: 20px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.section h2 {
+  color: #daa747;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.section p {
+  color: #daa747;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.swiper {
+  width: 1000px;
+  height: 600px;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.swiper-container {
+  touch-action: none; /* Disable swiping */
+}
+
+.swiper-button-prev, .swiper-button-next {
+  pointer-events: auto; /* Enable button interaction */
+}
+
+.swiper-slide {
+  position: relative;
+}
+
+.swiper-slide p {
+  position: absolute;
+  bottom: 300px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #daa747;
+  padding: 10px;
+  z-index: 0;
+  font-size: 72px;
+}
+
+.section-2 {
+  background-color: #191919;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.section-2 h2 {
+  color: #daa747;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+.section-2 p {
+  color: #daa747;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.heatmap-container {
+  display: flex;
+}
+
+#ruralHeatmap,
+#urbanHeatmap {
+  flex: 1;
+  margin-right: 20px; /* Adjust margin as needed */
+}
+
+.section-3 {
+  background-color: #191919;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  margin-bottom: 20px; /* Adjust margin as needed */
+  text-align: left;
+  color: #daa747;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.section-3 h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.section-3 p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-left: 10px;
+}
+
+footer {
+  background-color: #191919;
+  text-align: center;
+  transition: opacity 0.5s ease;
+  opacity: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  padding: 20px;
+}
+
+footer:hover {
+  opacity: 0.8;
+}
+
+footer p {
+  color: #daa747;
+  font-size: 18px;
+}
+
+#backToTopBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+}
+
+#backToTopBtn img {
+  width: 40px; /* Adjust the width as needed */
+  height: 40px; /* Adjust the height as needed */
+  color: white;
+}
